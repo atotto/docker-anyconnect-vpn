@@ -3,11 +3,12 @@ version: '3'
 services:
   vpn:
     container_name: vpn
-    image: jetbrainsinfra/docker-anyconnect-vpn
+    image: atotto/docker-anyconnect-vpn:vpn
     environment:
       - ANYCONNECT_SERVER=${ANYCONNECT_SERVER}
       - ANYCONNECT_USER=${ANYCONNECT_USER}
       - ANYCONNECT_PASSWORD=${ANYCONNECT_PASSWORD}
+      - ANYCONNECT_FINGERPRINT=${ANYCONNECT_FINGERPRINT}
     networks:
       - default
     privileged: true
@@ -16,11 +17,13 @@ services:
     restart: unless-stopped
     security_opt:
       - label:disable
-  packer:
-    container_name: packer
-    image: alpine
+  ssh:
+    container_name: ssh
+    image: atotto/docker-anyconnect-vpn:ssh
+    environment:
+      - MY_SERVER_ADDR=${MY_SERVER_ADDR}
     tty: true
-    entrypoint: /bin/sleep 10
+    entrypoint: ping ${MY_SERVER_ADDR}
     depends_on:
       - vpn
     network_mode: "service:vpn"
