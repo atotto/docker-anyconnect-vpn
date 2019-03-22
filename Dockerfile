@@ -1,5 +1,5 @@
-FROM alpine:3.5
-RUN apk add openconnect --no-cache  --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
+FROM alpine:edge
+RUN apk -U add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ openconnect
 ADD entrypoint.sh /entrypoint.sh
 HEALTHCHECK  --interval=10s --timeout=10s --start-period=10s \
   CMD /sbin/ifconfig tun0
