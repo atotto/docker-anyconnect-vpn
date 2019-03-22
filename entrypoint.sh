@@ -1,2 +1,2 @@
 #!/bin/sh
-( echo yes; echo $ANYCONNECT_PASSWORD ) | openconnect $ANYCONNECT_SERVER --user=$ANYCONNECT_USER --timestamp
+( echo $ANYCONNECT_PASSWORD ) | openconnect  --servercert $ANYCONNECT_SERVER_CERT $ANYCONNECT_SERVER --user=$ANYCONNECT_USER --timestamp
